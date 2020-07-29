@@ -1,0 +1,3 @@
+packages:
+    - git:  https://docs.getdbt.com/docs/package-management
+      revision: master
