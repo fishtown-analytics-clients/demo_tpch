@@ -1,3 +1,5 @@
 packages:
-    - git:  https://docs.getdbt.com/docs/package-management
-      revision: master
+  - package: fishtown-analytics/codegen
+    version: 0.1.0
+  - package: fishtown-analytics/dbt_utils
+    version: ["<0.5.0"]    
