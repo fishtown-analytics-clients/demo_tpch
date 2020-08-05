@@ -1,0 +1,153 @@
+version: 2
+
+sources:
+  - name: RAW_TPCH_SF001 # required
+    description: copy of Snowflake sample db TPCH_SF001
+    database: RAW
+    # schema: <schema_name>
+    
+    freshness:
+      warn_after:
+        count: 24
+        period: hour
+      error_after:
+        count: 10000
+        period: day
+
+    tables:
+      - name: CUSTOMER #required
+        description: customer demension
+        tests:
+            - not_null
+        columns:
+          - name: C_CUSTKEY # required
+            description: customer keys
+            tests:
+              - unique
+
+      - name: LINEITEM #required
+        description: line items
+        tests:
+          - not_null
+        freshness:
+          warn_after:
+            count: 24
+            period: hour
+          error_after:
+            count: 10000
+            period: day
+
+        columns:
+          - name: L_ORDERKEY # required
+            description: unique order key
+            tests:
+              - unique
+
+      - name: NATION #required
+        description: nation names and regions
+        tests:
+          - not_null
+        freshness:
+          warn_after:
+            count: 24
+            period: hour
+          error_after:
+            count: 10000
+            period: day
+
+        columns:
+          - name: L_NATIONKEY # required
+            description: nation table key
+            tests:
+              - not_null
+
+      - name: ORDERS #required
+        description: orders dimension
+        tests:
+          - not_null
+        freshness:
+          warn_after:
+            count: 24
+            period: hour
+          error_after:
+            count: 10000
+            period: day
+
+        columns:
+          - name: O_ORDERSKEY # required
+            description: ORDERS key
+            tests:
+              - unique
+
+
+      - name: PART #required
+        description: parts dimension
+        tests:
+          - not_null
+        freshness:
+          warn_after:
+            count: 24
+            period: hour
+          error_after:
+            count: 10000
+            period: day
+
+        columns:
+          - name: P_PARTKEY # required
+            description: part key
+            tests:
+              - unique
+
+      - name: PARTSUPP #required
+        description: parts supplier dimension
+        tests:
+          - not_null
+        freshness:
+          warn_after:
+            count: 24
+            period: hour
+          error_after:
+            count: 10000
+            period: day
+
+        columns:
+          - name: PS_PARTKEY # required
+            description: parts supplier key
+            tests:
+              - unique
+
+      - name: REGION #required
+        description: regions dimension
+        tests:
+          - not_null
+        freshness:
+          warn_after:
+            count: 24
+            period: hour
+          error_after:
+            count: 10000
+            period: day
+
+        columns:
+          - name: R_REGIONKEY # required
+            description: regions key
+            tests:
+              - unique
+
+      - name: SUPPLIER #required
+        description: supplier demension
+        tests:
+          - not_null
+        freshness:
+          warn_after:
+            count: 24
+            period: hour
+          error_after:
+            count: 10000
+            period: day
+
+        columns:
+          - name: S_SUPPKEY # required
+            description: suppliers key
+            tests:
+              - unique
