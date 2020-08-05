@@ -23,7 +23,14 @@ sources:
       - name: lineitem
         columns:
           - name: l_orderkey
+            description: Foreign Key to O_ORDERKEY
+            tests: 
+              - unique:
+                  severity: warn
+              - not_null:
+                  severity: warn
           - name: l_partkey
+            description:  Foreign key to P_PARTKEY, first part of the compound Foreign Key to (PS_PARTKEY,PS_SUPPKEY) with L_SUPPKEY
           - name: l_suppkey
           - name: l_linenumber
           - name: l_quantity
