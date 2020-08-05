@@ -8,6 +8,10 @@ sources:
       - name: customer
         columns:
           - name: c_custkey
+            description: unique customer key
+            tests:
+              - unique
+              - not_null
           - name: c_name
           - name: c_address
           - name: c_nationkey
