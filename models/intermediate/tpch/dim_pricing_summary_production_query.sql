@@ -20,7 +20,7 @@ final as (
     from 
         line_item
     where 
-        ship_date <= date '1998-12-01' - interval '[DELTA]' day (3) 
+        ship_date <= dateadd('day', -3, '1998-12-01')
     group by
         return_flag,
         line_status
@@ -30,4 +30,3 @@ final as (
 )
 
 select * from final
-{{foo}}
