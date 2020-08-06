@@ -24,16 +24,6 @@ clean-targets:         # directories to be removed by `dbt clean`
     - "target"
     - "dbt_modules"
 
-models:
-  zendesk:
-    stitch:
-      enabled: true
-      vars:
-        organizations_table:   zendesk.organizations
-        tickets_table:         zendesk.organizations
-        ticket_metrics_table:  zendesk.organizations
-        users_table:           zendesk.organizations
-        ticket_tags_table:     zendesk.organizations
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 
