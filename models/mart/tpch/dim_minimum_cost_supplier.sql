@@ -1,36 +1,35 @@
 with supplier as (
-
+    
     select * from {{ ref('stg_tpch__supplier') }}
-
 ),
 
-with part as (
+part as (
     
     select * from {{ ref('stg_tpch__part') }}
 ),
 
-with nation as (
+nation as (
     
     select * from {{ ref('stg_tpch__nation') }}
 ),
 
-with part_supplier as (
+part_supplier as (
     
     select * from {{ ref('stg_tpch__part_supply') }}
 ),
 
-with region as (
+region as (
     
     select * from {{ ref('stg_tpch__region') }}
-)
+),
 
 final as (
     select 
         supplier.account_balance,
         supplier.name,
-        nation.name,
+        nation.n_name,
         part.part_key,
-        pars.manaufacture,
+        part.manufacturer,
         supplier.address,
         supplier.phone,
         supplier.comment
@@ -38,35 +37,39 @@ final as (
     from 
         part,
         supplier,
-        partsupp,
+        part_supplier,
         nation,
         region
 
     where 
-        p_partkey = ps_partkey
-        and s_suppkey = ps_suppkey
-        and p_size = [SIZE]
-        and p_type like '%[TYPE]'
-        and s_nationkey = n_nationkey
-        and n_regionkey = r_regionkey
-        and r_name = '[REGION]'
-        and ps_supplycost = (
-                select
-                    min(ps_supplycost)
-                from
-                    partsupp, supplier,
-                    nation, region
-                where
-                    p_partkey = ps_partkey
-                    and s_suppkey = ps_suppkey
-                    and s_nationkey = n_nationkey
-                    and n_regionkey = r_regionkey
-                    and r_name = '[REGION]'
-)
+        part.part_key = part_supplier.part_key
+        and supplier.supplier_key = part_supplier.supplier_key
+        and part.size = '[SIZE]'
+        and part.type like '%[TYPE]'
+        and supplier.nation_key = nation.nation_key
+        and nation.region_key = region.region_key
+        and region.name = '[REGION]'
+        and part_supplier.supply_cost = 
+        (
+            select
+                min(part_supplier.supply_cost)
+            from
+                part_supplier, supplier,
+                nation, region
+            where
+                part.part_key = part_supplier.part_key
+                and supplier.supplier_key = part_supplier.supplier_key
+                and supplier.nation_key = nation.nation_key
+                and nation.region_key = region.region_key
+                and region.name = '[REGION]'
+        )
 
 order by
-s_acctbal desc,
-n_name,
-s_name,
-p_partkey;
+    supplier.account_balance desc,
+    nation.n_name,
+    supplier.name,
+    part.part_key
+
 )
+
+select * from final
