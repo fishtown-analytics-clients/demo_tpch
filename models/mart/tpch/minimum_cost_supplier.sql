@@ -1,4 +1,4 @@
--- This query finds which supplier should be selected to place an order for a given part in a given region.
+    -- This query finds which supplier should be selected to place an order for a given part in a given region.
 
 with supplier as (
     select * from {{ ref('stg_tpch__supplier') }}
@@ -21,46 +21,46 @@ part_supplier as (
 
 final as (
    select
-        s_acctbal,
-        s_name,
-        n_name,
-        p_partkey,
-        p_mfgr,
-        s_address,
-        s_phone,
-        s_comment
+        supplier.account_balance,
+        supplier.name,
+        nation.n_name,
+        part.part_key,
+        part.manufacturer,
+        supplier.address,
+        supplier.phone,
+        supplier.comment
     from
-part,
-supplier,
-partsupp,
-nation,
-region
-where
-p_partkey = ps_partkey
-and s_suppkey = ps_suppkey
-and p_size = [SIZE]
-and p_type like '%[TYPE]'
-and s_nationkey = n_nationkey
-and n_regionkey = r_regionkey
-and r_name = '[REGION]'
-and ps_supplycost = (
-select 
-    min(ps_supplycost)
-from
-partsupp, supplier,
-nation, region
-where
-p_partkey = ps_partkey
-and s_suppkey = ps_suppkey
-and s_nationkey = n_nationkey
-and n_regionkey = r_regionkey
-and r_name = '[REGION]'
-)
-order by
-s_acctbal desc,
-n_name,
-s_name,
-p_partkey;
+        part,
+        supplier,
+        part_supplier,
+        nation,
+        region
+    where
+        part.part_key = part_supplier.part_key
+        and supplier.supplier_key = part_supplier.supplier_key
+        and part.size = '[SIZE]'
+        and part.type like '%[TYPE]'
+        and supplier.nation_key = nation.nation_key
+        and nation.region_key = region.region_key
+        and region.name = '[REGION]'
+        and part_supplier.supply_cost = (
+    select 
+        min(part_supplier.supply_cost)
+    from
+        part_supplier, supplier,
+        nation, region
+    where
+        part.part_key = part_supplier.part_key
+        and supplier.supplier_key = part_supplier.supplier_key
+        and supplier.nation_key = nation.nation_key
+        and nation.region_key = region.region_key
+        and region.name = '[REGION]'
+    )
+    order by
+        supplier.account_balance desc,
+        nation.n_name,
+        supplier.name,
+        part.part_key
 )
 
 select * from final
