@@ -1,0 +1,13 @@
+name: demo_master
+version: 2
+config-version: 2
+
+models:
+  - name: dim_minimum_cost_supplier
+    description: This query finds which supplier should be selected to place an order for a given part in a given region.
+
+  - name: dim_shipping_priority
+    description: This query retrieves the 10 unshipped orders with the highest value.
+
+  - name: dim_pricing_summary_production
+    description: This query reports the amount of business that was billed, shipped, and returned.

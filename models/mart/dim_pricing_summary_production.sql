@@ -1,3 +1,9 @@
+{{
+  config(
+    materialized='incremental',
+    incremental_strategy='delete+insert',
+  )
+}}
 with line_item as (
 
     select * from {{ ref('stg_tpch__line_item') }}

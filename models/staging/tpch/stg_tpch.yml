@@ -4,9 +4,3 @@ version: 2
 models:
     - name: customer
       description: This table contains the customer records
-      columns:
-        - name: customer_key
-          description: This is the unique identifier for the customer
-          tests:
-            - unique
-            - not_null

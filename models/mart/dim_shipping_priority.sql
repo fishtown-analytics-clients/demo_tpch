@@ -1,4 +1,9 @@
--- This query retrieves the 10 unshipped orders with the highest value.
+{{
+  config(
+    materialized='view'
+  )
+}}
+
 
 with customer as (
     
