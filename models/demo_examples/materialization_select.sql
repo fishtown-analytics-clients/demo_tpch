@@ -1,9 +1,9 @@
 with materialization_ephemeral as 
-    (select * from {{ref('materialization_ephemeral')}}
+    (select * from {{ref('materialization_ephemeral')}})
 ,materialization_view as 
-    (select * from {{ref('materialization_view')}}
+    (select * from {{ref('materialization_view')}})
 ,materialization_table as 
-    (select * from {{ref('materialization_table')}}
+    (select * from {{ref('materialization_table')}})
 
 select * from materialization_ephemeral
 
