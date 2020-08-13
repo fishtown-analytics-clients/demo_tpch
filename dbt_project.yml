@@ -24,6 +24,12 @@ clean-targets:         # directories to be removed by `dbt clean`
     - "target"
     - "dbt_modules"
 
+models:
+  my_new_project:
+    +pre-hook: "alter warehouse compute set warehouse_size=small;"
+    +post-hook: "alter warehouse compute set warehouse_size=xsmall;"
+
+
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 
