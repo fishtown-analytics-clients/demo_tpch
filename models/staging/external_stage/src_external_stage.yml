@@ -1,71 +1,52 @@
-# version: 2
-
-# sources:
-# - name: snowplow
-#     database: raw
-#     schema: jaffle_shop
-#     loader: S3
-#     loaded_at_field: collector_hour
   
-#     tables:
-#       - name: event
-#         external:
-#           location: "@raw.snowplow.snowplow"
-#           file_format: "( type = csv )"
-#           auto_refresh: true
-#           partitions:
-#             - name: collector_hour
-#               data_type: timestamp
-#               expression: to_timestamp(substr(metadata$filename, 8, 13), 'YYYY/MM/DD/HH24')
-#         columns:
-#           - name: app_id
-#             data_type: varchar(255)
-#             description: "Application ID"
+version: 2
 
-#   - name: external_stage
-#     database: raw
-#     schema: jaffle_shop
-#     tables:
-#       - name: customers
-#         columns:
-#           - name: id
-#             description: unique customer id
-#             tests:
-#               - unique:
-#                   severity: warn
-#               - not_null:
-#                   severity: warn
-#           - name: first_name
-#             description: first name of customer
-#             tests:
-#               - not_null:
-#                   severity: warn
-#           - name: last_name
-#             description: last name of customer
-#             tests:
-#               - not_null:
-#                   severity: warn
-#       - name: orders
-#         columns:
-#           - name: id
-#             description: unique orders id
-#             tests:
-#               - unique:
-#                   severity: warn
-#               - not_null:
-#                   severity: warn
-#           - name: user_id
-#             description: user id on the orders
-#             tests:
-#               - not_null:
-#                   severity: warn
-#           - name: order_date
-#             description: date order was placed
-#             tests:
-#               - not_null:
-#                   severity: warn
-#           - name: status
-#             description: current status of order
-#             tests:
-#               - not_null:
-#                   severity: warn
+sources:
+  - name: jaffle_shop
+    database: raw
+    schema: jaffle_shop
+    loader: S3
+    loaded_at_field: collector_hour
+  
+    tables:
+      - name: customers
+        external:
+          location: "s3://dbt-tutorial-test/customers.csv"
+          file_format: "( type = csv )"
+          auto_refresh: true
+          partitions:
+            - name: collector_hour
+              data_type: timestamp
+              expression: to_timestamp(substr(metadata$filename, 8, 13), 'YYYY/MM/DD/HH24')
+        columns:
+          - name: id
+            data_type: integer
+            description: "Customer ID"
+          - name: first_name
+            data_type: varchar
+            description: "First name of customer"
+          - name: last_name
+            data_type: varchar
+            description: "Last name of customer" 
+      - name: orders
+        external:
+            location: "s3://dbt-tutorial-test/orders.csv"
+            file_format: "( type = csv )"
+            auto_refresh: true
+            partitions:
+              - name: hour
+                data_type: timestamp
+                expression: to_timestamp(substr(metadata$filename, 8, 13), 'YYYY/MM/DD/HH24')
+        columns:
+          - name: id
+            data_type: integer
+            description: "Order ID"
+          - name: user_id
+            data_type: integer
+            description: "User id for the order"
+          - name: order_date
+            data_type: date
+            description: "Date the order was placed"
+          - name: status
+            data_type: varchar
+            description: "Satus of order"

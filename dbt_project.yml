@@ -24,33 +24,18 @@ clean-targets:         # directories to be removed by `dbt clean`
     - "target"
     - "dbt_modules"
 
-<<<<<<< HEAD
 on-run-start:
   - "alter warehouse compute set warehouse_size=small;"
-  - "drop schema if exists raw.jaffle_shop;"
-  - "create schema raw.jaffle_shop;"
-  - "create table raw.jaffle_shop.customers (id integer,first_name varchar,last_name varchar);"
-  - "create table raw.jaffle_shop.orders (id integer,user_id integer,order_date date,status varchar);"
-  - "copy into raw.jaffle_shop.customers from 's3://dbt-tutorial-test/customers.csv' file_format = (type = 'CSV' field_delimiter = ',' skip_header = 1);"
-  - "copy into raw.jaffle_shop.orders from 's3://dbt-tutorial-test/orders.csv' file_format = (type = 'CSV' field_delimiter = ',' skip_header = 1);"
 
 on-run-end:
-    
-  #- "grant select on {{ this }} to group ????;"
   - "alter warehouse compute set warehouse_size=xsmall;"
   - "drop schema if exists raw.jaffle_shop"
 
-# models:
-#   my_new_project:
-#     +pre-hook:
-#     +post-hook:
-=======
 models:
-  tpch:
-    +pre-hook: "alter warehouse compute set warehouse_size=small;"
-    +post-hook: "alter warehouse compute set warehouse_size=xsmall;"
-
-
+  staging:
+    external_stage:
+      +enabled: false
+    
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 
@@ -58,4 +43,3 @@ models:
 # as tables. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 
->>>>>>> 7e8f0e13273dec01af43dc6e6b263935fca6a584
