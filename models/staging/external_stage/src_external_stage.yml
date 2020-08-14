@@ -1,0 +1,71 @@
+# version: 2
+
+# sources:
+# - name: snowplow
+#     database: raw
+#     schema: jaffle_shop
+#     loader: S3
+#     loaded_at_field: collector_hour
+  
+#     tables:
+#       - name: event
+#         external:
+#           location: "@raw.snowplow.snowplow"
+#           file_format: "( type = csv )"
+#           auto_refresh: true
+#           partitions:
+#             - name: collector_hour
+#               data_type: timestamp
+#               expression: to_timestamp(substr(metadata$filename, 8, 13), 'YYYY/MM/DD/HH24')
+#         columns:
+#           - name: app_id
+#             data_type: varchar(255)
+#             description: "Application ID"
+
+#   - name: external_stage
+#     database: raw
+#     schema: jaffle_shop
+#     tables:
+#       - name: customers
+#         columns:
+#           - name: id
+#             description: unique customer id
+#             tests:
+#               - unique:
+#                   severity: warn
+#               - not_null:
+#                   severity: warn
+#           - name: first_name
+#             description: first name of customer
+#             tests:
+#               - not_null:
+#                   severity: warn
+#           - name: last_name
+#             description: last name of customer
+#             tests:
+#               - not_null:
+#                   severity: warn
+#       - name: orders
+#         columns:
+#           - name: id
+#             description: unique orders id
+#             tests:
+#               - unique:
+#                   severity: warn
+#               - not_null:
+#                   severity: warn
+#           - name: user_id
+#             description: user id on the orders
+#             tests:
+#               - not_null:
+#                   severity: warn
+#           - name: order_date
+#             description: date order was placed
+#             tests:
+#               - not_null:
+#                   severity: warn
+#           - name: status
+#             description: current status of order
+#             tests:
+#               - not_null:
+#                   severity: warn
