@@ -15,7 +15,7 @@ select
     nation_key,
     phone_number,
     account_balance,
-    market_segment_name
+    market_segment
 from
     customer
 order by
