@@ -44,11 +44,11 @@ final as (
     where 
         part.part_key = part_supplier.part_key
         and supplier.supplier_key = part_supplier.supplier_key
-        --and part.size = '[SIZE]'
-        --and part.type like '%[TYPE]'
+        and part.size = '[SIZE]'
+        and part.type like '%[TYPE]'
         and supplier.nation_key = nation.nation_key
         and nation.region_key = region.region_key
-        --and region.name = '[REGION]'
+        and region.name = '[REGION]'
         and part_supplier.cost = 
         (
             select
@@ -61,7 +61,7 @@ final as (
                 and supplier.supplier_key = part_supplier.supplier_key
                 and supplier.nation_key = nation.nation_key
                 and nation.region_key = region.region_key
-                --and region.name = '[REGION]'
+                and region.name = '[REGION]'
         )
 
 order by

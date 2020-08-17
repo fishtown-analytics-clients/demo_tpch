@@ -18,7 +18,7 @@ final as (
 
     select
         line_item.order_key,
-        --sum(line_item.extended_price*(1-line_item.discount)) as revenue,
+        sum(line_item.extended_price*(1-line_item.discount_percentage)) as revenue,
         orders.order_date,
         orders.ship_priority
     from
@@ -26,11 +26,11 @@ final as (
         orders,
         line_item
     where
-        --customer.market_segment = '[SEGMENT]'
-        customer.customer_key = orders.customer_key
+        customer.market_segment = '[SEGMENT]'
+        and customer.customer_key = orders.customer_key
         and line_item.order_key = orders.order_key
-        {# and orders.order_date < date '[DATE]'
-        and line_item.ship_date > date '[DATE]' #}
+        and orders.order_date < date '[DATE]'
+        and line_item.ship_date > date '[DATE]'
     group by
         line_item.order_key,
         orders.order_date,

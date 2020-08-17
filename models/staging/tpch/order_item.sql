@@ -24,13 +24,14 @@ select
     line_item.part_key,
     line_item.supplier_key,
     line_item.return_flag,
+    
     line_item.line_number,
-    line_item.status_code as line_status_code,
+    line_item.status_code as order_item_status_code,
     line_item.ship_date,
     line_item.commit_date,
     line_item.receipt_date,
     line_item.ship_mode,
-
+    line_item.extended_price,
     line_item.quantity,
     
     -- extended_price is actually the line item total,
