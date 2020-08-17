@@ -1,0 +1,63 @@
+  
+version: 2
+
+sources:
+  - name: jaffle_shop
+    database: raw
+    schema: jaffle_shop
+    loader: S3
+    
+    tables:
+      - name: customers
+        external:
+          location: '@raw.jaffle_shop'
+          file_format: "(type = csv )"
+          auto_refresh: false
+        columns:
+          - name: id
+            data_type: int
+            description: "Customer ID"
+          - name: first_name
+            data_type: varchar
+            description: "First name of customer"
+          - name: last_name
+            data_type: varchar
+            description: "Last name of customer" 
+          - name: email
+            data_type: varchar
+      - name: payments
+        external:
+          location: '@raw.jaffle_shop'
+          file_format: "( type = csv)"
+          auto_refresh: true
+        columns:
+          - name: id
+            data_type: int
+            description: "payment id"
+          - name: order_id
+            data_type: int
+            description: "payment order id"
+          - name: payment_method
+            data_type: varchar
+            description: "customer payment method"
+          - name: ammount
+            data_type: int
+            description: "payment ammount"
+      - name: orders
+        external: 
+            location: '@raw.jaffle_shop'
+            file_format: "( type = csv DATE_FORMAT = auto)"
+            auto_refresh: false
+        columns:
+          - name: id
+            data_type: int
+            description: "Order ID"
+          - name: user_id
+            data_type: int
+            description: "User id for the order"
+          - name: order_date
+            data_type: date
+            description: "Date the order was placed"
+          - name: status
+            data_type: varchar
+            description: "Satus of order"
