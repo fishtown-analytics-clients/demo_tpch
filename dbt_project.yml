@@ -29,12 +29,7 @@ on-run-start:
 
 on-run-end:
   - "alter warehouse compute set warehouse_size=xsmall;"
-  - "drop schema if exists raw.jaffle_shop"
 
-models:
-  staging:
-    external_stage:
-      +enabled: false
     
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
