@@ -1,5 +1,5 @@
 {{ config(
-  enabled= true,
+  enabled= false,
   tags = ["customers"]
 ) }}
 
