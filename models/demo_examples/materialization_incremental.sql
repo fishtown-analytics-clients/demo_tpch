@@ -1,4 +1,7 @@
-{{ config(materialized='incremental') }}
+{{ config(
+    materialized='incremental',
+    persist_docs={"relation": true, "columns": true}
+    ) }}
 
 with source as (
 
