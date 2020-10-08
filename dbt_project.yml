@@ -25,10 +25,10 @@ clean-targets:         # directories to be removed by `dbt clean`
     - "dbt_modules"
 
 on-run-start:
-  - "alter warehouse compute set warehouse_size=small;"
+  - "alter warehouse transforming set warehouse_size=small;"
 
 on-run-end:
-  - "alter warehouse compute set warehouse_size=xsmall;"
+  - "alter warehouse transforming set warehouse_size=xsmall;"
 
     
 # Configuring models
