@@ -1,5 +1,6 @@
+with 
 
-with source as (
+source as (
 
     select * from {{ source('tpch', 'lineitem') }}
 
@@ -8,6 +9,7 @@ with source as (
 renamed as (
 
     select
+        {{ dbt_utils.surrogate_key(['l_orderkey','l_linenumber']) }} as order_item_key,
         l_orderkey as order_key,
         l_partkey as part_key,
         l_suppkey as supplier_key,

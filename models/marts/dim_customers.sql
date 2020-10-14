@@ -3,21 +3,29 @@
         materialized = 'table'
     )
 }}
-with customer as (
 
-    select * from {{ ref('customer') }}
+with 
+
+customer as (
+
+    select * from {{ ref('stg_tpch__customers') }}
 
 ),
+
 nation as (
 
-    select * from {{ ref('nation') }}
+    select * from {{ ref('stg_tpch__nations') }}
+
 ),
+
 region as (
 
-    select * from {{ ref('region') }}
+    select * from {{ ref('stg_tpch__regions') }}
 
 ),
+
 final as (
+    
     select 
         customer.customer_key,
         customer.name,
@@ -29,17 +37,13 @@ final as (
         customer.phone_number,
         customer.account_balance,
         customer.market_segment
-        -- new column
-    from
-        customer
-        inner join nation
-            on customer.nation_key = nation.nation_key
-        inner join region
-            on nation.region_key = region.region_key
+       
+    from customer
+    inner join nation
+        on customer.nation_key = nation.nation_key
+    inner join region
+        on nation.region_key = region.region_key
+
 )
-select 
-    *
-from
-    final
-order by
-    customer_key
+
+select * from final
