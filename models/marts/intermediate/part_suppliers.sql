@@ -28,7 +28,7 @@ final as (
 
     select 
 
-        {{ dbt_utils.surrogate_key(['parts.part_key', 'suppliers.supplier_key']) }} as part_supplier_key,
+        part_suppliers.part_supplier_key,
 
         parts.part_key,
         parts.name as part_name,

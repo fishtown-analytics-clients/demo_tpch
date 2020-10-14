@@ -21,7 +21,8 @@ line_items as (
 final as (
 
     select 
-        {{ dbt_utils.surrogate_key(['orders.order_key','line_items.line_number']) }} as order_item_key,
+        line_items.order_item_key,
+        
         orders.order_key,
         orders.order_date,
         orders.customer_key,
