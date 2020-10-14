@@ -5,7 +5,7 @@
 }}
 with orders as (
     
-    select * from {{ ref('base_tpch__orders') }}
+    select * from {{ ref('stg_tpch__orders') }}
 
 ),
 line_item as (

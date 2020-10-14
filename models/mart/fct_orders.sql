@@ -3,16 +3,21 @@
         materialized = 'table'
     )
 }}
-with orders as (
+
+with 
+
+orders as (
     
-    select * from {{ ref('orders') }}
+    select * from {{ ref('stg_tpch__orders') }}
 
 ),
+
 order_item as (
     
     select * from {{ ref('order_item') }}
 
 ),
+
 order_item_summary as (
 
     select 
@@ -25,10 +30,10 @@ order_item_summary as (
     group by
         1
 ),
+
 final as (
 
     select 
-
         orders.order_key, 
         orders.order_date,
         orders.customer_key,
@@ -42,14 +47,10 @@ final as (
         order_item_summary.item_discount_amount,
         order_item_summary.item_tax_amount,
         order_item_summary.net_item_sales_amount
-    from
-        orders
-        inner join order_item_summary
-            on orders.order_key = order_item_summary.order_key
+
+    from orders
+    inner join order_item_summary
+        on orders.order_key = order_item_summary.order_key
 )
-select 
-    *
-from
-    final
-order by
-    order_date
+
+select * from final

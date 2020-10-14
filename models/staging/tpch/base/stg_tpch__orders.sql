@@ -1,5 +1,6 @@
+with 
 
-with source as (
+source as (
 
     select * from {{ source('tpch', 'orders') }}
 
