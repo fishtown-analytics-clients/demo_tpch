@@ -14,7 +14,7 @@ orders as (
 
 order_item as (
     
-    select * from {{ ref('order_item') }}
+    select * from {{ ref('order_items') }}
 
 ),
 
