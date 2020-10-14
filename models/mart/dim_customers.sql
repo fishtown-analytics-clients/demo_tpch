@@ -14,7 +14,7 @@ customer as (
 
 nation as (
 
-    select * from {{ ref('nation') }}
+    select * from {{ ref('stg_tpch__nations') }}
 
 ),
 
