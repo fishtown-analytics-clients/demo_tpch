@@ -14,7 +14,7 @@ nation as (
 ),
 region as (
 
-    select * from {{ ref('region') }}
+    select * from {{ ref('stg_tpch__regions') }}
 
 ),
 final as (
