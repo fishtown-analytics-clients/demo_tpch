@@ -3,11 +3,17 @@
         materialized = 'table'
     )
 }}
-with part as (
 
-    select * from {{ref('part')}}
+with 
+
+parts as (
+
+    select * from {{ref('stg_tpch__parts')}}
+
 ),
+
 final as (
+
     select 
         part_key,
         name,
@@ -17,9 +23,8 @@ final as (
         size,
         container,
         retail_price
-    from
-        part
+    from parts
+
 )
-select *
-from final  
-order by part_key
+
+select * from final

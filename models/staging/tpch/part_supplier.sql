@@ -5,7 +5,7 @@
 }}
 with part as (
     
-    select * from {{ ref('part') }}
+    select * from {{ ref('stg_tpch__parts') }}
 
 ),
 supplier as (
