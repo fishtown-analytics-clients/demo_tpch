@@ -20,7 +20,7 @@ suppliers as (
 
 part_suppliers as (
 
-    select * from {{ ref('base_tpch__part_supplier') }}
+    select * from {{ ref('stg_tpch__part_suppliers') }}
 
 ),
 
