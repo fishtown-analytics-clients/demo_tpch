@@ -10,7 +10,7 @@ with order_item as (
 ),
 part_supplier as (
     
-    select * from {{ ref('part_supplier') }}
+    select * from {{ ref('part_suppliers') }}
 
 ),
 final as (
